@@ -3,7 +3,6 @@ import pytest
 import asyncio
 import tempfile
 import shutil
-import os
 from pathlib import Path
 from unittest.mock import Mock, AsyncMock
 import yaml
@@ -102,18 +101,27 @@ def _get_nested_value(data, key_path, default=None):
     except (KeyError, TypeError):
         return default
 
-# @pytest.fixture
-# def mock_db_manager():
-#     """Mock database manager"""
-#     db_manager = Mock(spec=DatabaseManager)
-#     db_manager.get_active_urls.return_value = [
-#         {'url': 'https://example.com/news', 'tags': ['news'], 'check_frequency': 24},
-#         {'url': 'https://test.com/blog', 'tags': ['tech'], 'check_frequency': 12}
-#     ]
-#     db_manager.add_url.return_value = True
-#     db_manager.is_content_new.return_value = True
-#     db_manager.update_content_record.return_value = None
-#     return db_manager
+@pytest.fixture
+def mock_db_manager():
+    """Mock database manager"""
+    db_manager = Mock(spec=DatabaseManager)
+    db_manager.get_active_urls.return_value = [
+        {'url': 'https://example.com', 'tags': ['news'], 'check_frequency': 24},
+        {'url': 'https://test.com', 'tags': ['tech'], 'check_frequency': 12}
+    ]
+    db_manager.add_url.return_value = True
+    db_manager.update_content_record.return_value = None
+    db_manager.get_content_since.return_value = [
+        {
+            'url': 'https://example.com/article1',
+            'title': 'Test Article',
+            'content': 'Test content',
+            'retrieved_at': datetime.now(),
+            'tags': ['news']
+        }
+    ]
+    db_manager.log_query.return_value = None
+    return db_manager
 
 # @pytest.fixture
 # def mock_vector_store():

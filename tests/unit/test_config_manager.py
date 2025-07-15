@@ -1,13 +1,10 @@
 # tests/unit/test_config_manager.py
 import pytest
 import os
-import sys
 from pathlib import Path
 import yaml
-from unittest.mock import patch, mock_open
+from unittest.mock import patch
 
-# Add src to path
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 from utils.config_manager import ConfigManager, get_config
 
 class TestConfigManager:

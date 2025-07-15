@@ -2,6 +2,7 @@
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from datetime import datetime
+from typing import Optional
 import logging
 import json
 
@@ -91,7 +92,8 @@ class DatabaseManager:
         with psycopg2.connect(self.connection_string) as conn:
             with conn.cursor() as cur:
                 cur.execute("""
-                    SELECT content_hash FROM content_records
+                    SELECT content_hash
+                    FROM content_records
                     WHERE url = %s
                     ORDER BY retrieved_at DESC
                     LIMIT 1
@@ -110,7 +112,7 @@ class DatabaseManager:
                 """, (url, title, str(content_hash), content))
                 conn.commit()
 
-    def get_content_since(self, since_date: datetime, topic_filter: str = "") -> list:
+    def get_content_since(self, since_date: datetime, topic_filter: Optional[str] = None) -> list:
         """Get content since specified date"""
         with psycopg2.connect(self.connection_string) as conn:
             with conn.cursor(cursor_factory=RealDictCursor) as cur:
