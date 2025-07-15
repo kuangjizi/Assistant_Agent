@@ -1,0 +1,50 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: ai_assistant
+      POSTGRES_USER: ai_user
+      POSTGRES_PASSWORD: ai_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:6-alpine
+    ports:
+      - "6379:6379"
+
+  ai_assistant:
+    build: .
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - DATABASE_URL=postgresql://ai_user:ai_password@postgres:5432/ai_assistant
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+    ports:
+      - "8501:8501"
+    command: streamlit run web/streamlit_app.py --server.port=8501 --server.address=0.0.0.0
+
+  scheduler:
+    build: .
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - DATABASE_URL=postgresql://ai_user:ai_password@postgres:5432/ai_assistant
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+    command: python src/services/scheduler.py
+
+volumes:
+  postgres_data:

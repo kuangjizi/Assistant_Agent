@@ -1,0 +1,47 @@
+# Database Configuration
+database:
+  url: "postgresql://ai_user:ai_password@localhost:5432/ai_assistant"
+  pool_size: 10
+  max_overflow: 20
+
+# OpenAI Configuration
+openai:
+  api_key: "your-openai-api-key-here"
+  model: "gpt-3.5-turbo"
+  temperature: 0.2
+  max_tokens: 2000
+
+# Email Configuration
+email:
+  smtp_server: "smtp.gmail.com"
+  smtp_port: 587
+  username: "your-email@gmail.com"
+  password: "your-app-password"
+  recipients:
+    - "recipient1@example.com"
+    - "recipient2@example.com"
+
+# Vector Store Configuration
+vector_store:
+  path: "./data/vector_store"
+  collection_name: "ai_assistant_docs"
+
+# Web Scraping Configuration
+scraping:
+  user_agent: "AI-Assistant-Agent/1.0"
+  request_delay: 1.0
+  timeout: 30
+  max_retries: 3
+
+# Scheduler Configuration
+scheduler:
+  timezone: "UTC"
+  daily_summary_time: "08:00"
+  content_update_interval: 24  # hours
+
+# System Configuration
+system:
+  log_level: "INFO"
+  max_content_age_days: 30
+  vector_store_chunk_size: 1000
+  vector_store_chunk_overlap: 200
