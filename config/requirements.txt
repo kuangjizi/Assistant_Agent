@@ -1,0 +1,44 @@
+# Core dependencies
+langchain
+openai
+streamlit
+psycopg2-binary
+sqlalchemy
+
+# Web scraping
+scrapy
+beautifulsoup4
+aiohttp
+requests
+readability
+readability-lxml
+feedparser
+urllib3
+lxml
+html5lib
+
+# Scheduling and async
+apscheduler
+aiomqtt
+
+
+# Data processing
+pandas
+numpy
+pydantic
+
+# Utilities
+pyyaml
+python-dotenv
+psutil
+
+# Email
+jinja2
+
+# Testing
+pytest
+pytest-asyncio
+
+# Additional LangChain components
+langchain-community
+langchain-openai

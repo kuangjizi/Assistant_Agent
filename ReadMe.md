@@ -71,7 +71,7 @@ Assistant_Agent/
 │   │   └── web_scraper.py
 │   ├── utils/
 │   │   ├── __init__.py
-│   │   ├── config.py
+│   │   ├── config_manager.py
 │   │   └── logging.py
 │   └── main.py
 ├── web/
@@ -82,3 +82,28 @@ Assistant_Agent/
 │   └── requirements.txt
 ├── tests/
 └── docker-compose.yml
+
+
+tests/
+├── __init__.py
+├── conftest.py                    # Pytest configuration and fixtures
+├── unit/
+│   ├── __init__.py
+│   ├── test_config_manager.py
+│   ├── test_database.py
+│   ├── test_vector_store.py
+│   ├── test_content_retriever.py
+│   ├── test_query_engine.py
+│   ├── test_summarizer.py
+│   ├── test_web_scraper.py
+│   ├── test_email_service.py
+│   └── test_scheduler.py
+├── integration/
+│   ├── __init__.py
+│   ├── test_end_to_end.py
+│   └── test_workflow.py
+├── fixtures/
+│   ├── sample_html.html
+│   ├── sample_rss.xml
+│   └── test_data.json
+└── requirements.txt

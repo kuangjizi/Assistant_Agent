@@ -8,7 +8,7 @@ from pathlib import Path
 # Add src to Python path
 sys.path.append(str(Path(__file__).parent))
 
-from utils.config import Config
+from utils.config_manager import get_config
 from utils.logging_config import setup_logging
 from data.database import DatabaseManager
 from data.vector_store import VectorStoreManager
@@ -20,7 +20,7 @@ from services.email_service import EmailService
 
 class AIAssistantApp:
     def __init__(self):
-        self.config = Config()
+        self.config = get_config(config_path="config/config.yaml")
         setup_logging(self.config.system.get('log_level', 'INFO'))
         self.logger = logging.getLogger(__name__)
 
@@ -57,21 +57,21 @@ class AIAssistantApp:
             self.content_retriever = ContentRetriever(
                 vector_store=self.vector_store,
                 db_manager=self.db_manager,
-                config=self.config
+                # config=self.config
             )
             self.logger.info("Content retriever initialized")
 
             # Query Engine
             self.query_engine = QueryEngine(
                 vector_store=self.vector_store,
-                config=self.config
+                llm_model=self.config.query_engine['llm_model']
             )
             self.logger.info("Query engine initialized")
 
             # Summarizer
             self.summarizer = Summarizer(
                 db_manager=self.db_manager,
-                config=self.config
+                llm=self.config.query_engine['llm_model']
             )
             self.logger.info("Summarizer initialized")
 
@@ -80,8 +80,7 @@ class AIAssistantApp:
                 content_retriever=self.content_retriever,
                 summarizer=self.summarizer,
                 email_service=self.email_service,
-                db_manager=self.db_manager,
-                config=self.config
+                db_manager=self.db_manager
             )
             self.logger.info("Scheduler initialized")
 

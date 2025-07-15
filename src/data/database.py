@@ -1,7 +1,6 @@
 # src/data/database.py
 import psycopg2
 from psycopg2.extras import RealDictCursor
-import hashlib
 from datetime import datetime
 import logging
 import json
@@ -58,7 +57,7 @@ class DatabaseManager:
 
                 conn.commit()
 
-    def add_url(self, url: str, added_by: str = "", tags: list = "") -> bool:
+    def add_url(self, url: str, added_by: str = "", tags: list = []) -> bool:
         """Add new URL to monitor"""
         try:
             with psycopg2.connect(self.connection_string) as conn:

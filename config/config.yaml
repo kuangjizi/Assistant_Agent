@@ -15,11 +15,11 @@ openai:
 email:
   smtp_server: "smtp.gmail.com"
   smtp_port: 587
-  username: "your-email@gmail.com"
-  password: "your-app-password"
+  username: "kuangjizi@gmail.com"
+  password: "xhnx hbmd dgja hwkd"
   recipients:
-    - "recipient1@example.com"
-    - "recipient2@example.com"
+    - "kuangjizi1234@gmail.com"
+    - "kingansen@gmail.com"
 
 # Vector Store Configuration
 vector_store:
