@@ -1,7 +1,7 @@
 # src/agents/query_engine.py
 from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.prompts import PromptTemplate
-from langchain.tools import DuckDuckGoSearchRun
+from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_core.documents import Document
 from langgraph.checkpoint.memory import MemorySaver
 from langchain_community.vectorstores import FAISS

@@ -2,7 +2,7 @@
 import asyncio
 import aiohttp
 from bs4 import BeautifulSoup
-from langchain.document_loaders import WebBaseLoader
+from langchain_community.document_loaders import WebBaseLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from datetime import datetime, timedelta

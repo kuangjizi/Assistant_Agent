@@ -23,22 +23,26 @@ Excellent RAG (Retrieval-Augmented Generation) capabilities
 Built-in document processing and vector store integration
 Extensible agent framework
 Strong community support
+
 Web Scraping: Scrapy + BeautifulSoup
 
 Scrapy: Robust, scalable web crawling framework
 BeautifulSoup: Flexible HTML parsing for diverse content types
 Better than Selenium for performance, more reliable than simple requests
+
 Vector Database: ChromaDB
 
 Lightweight, embeddable vector database
 Easy integration with LangChain
 Good performance for moderate scale
 Alternative: Weaviate for larger scale
+
 Scheduler: APScheduler
 
 Python-native scheduling with cron-like capabilities
 Persistent job storage
 Better than celery for simpler use cases
+
 Database: PostgreSQL
 
 Reliable ACID compliance

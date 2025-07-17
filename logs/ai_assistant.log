@@ -1,0 +1,7 @@
+2025-07-17 15:34:47,268 - __main__ - INFO - Initializing AI Assistant Application...
+2025-07-17 15:34:47,272 - __main__ - ERROR - Failed to initialize application: connection to server on socket "/tmp/.s.PGSQL.5432" failed: No such file or directory
+	Is the server running locally and accepting connections on that socket?
+
+2025-07-17 15:34:47,272 - root - ERROR - Application error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: No such file or directory
+	Is the server running locally and accepting connections on that socket?
+

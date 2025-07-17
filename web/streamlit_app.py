@@ -5,18 +5,15 @@ from datetime import datetime, timedelta
 import sys
 import os
 
-# Add src to path
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
-
 from agents.query_engine import QueryEngine
 from agents.summarizer import Summarizer
 from data.database import DatabaseManager
-from utils.config import Config
+from utils.config_manager import get_config
 
 # Initialize components
 @st.cache_resource
 def init_components():
-    config = Config()
+    config = get_config()
     db_manager = DatabaseManager(config.database_url)
     # Initialize other components...
     return db_manager
