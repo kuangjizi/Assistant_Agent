@@ -90,6 +90,15 @@ class AIAssistantApp:
             self.logger.error(f"Failed to initialize application: {e}")
             raise
 
+    @classmethod
+    async def create(cls):
+        """
+        Async Factory Pattern to create and initialize an AIAssistantApp instance.
+        """
+        instance = cls()
+        await instance.initialize()
+        return instance
+
     async def start_services(self):
         """Start background services"""
         try:
@@ -132,10 +141,10 @@ class AIAssistantApp:
 
 async def main():
     """Main application entry point"""
-    app = AIAssistantApp()
-
+    app = None
     try:
-        await app.initialize()
+        # Use the factory to create a fully initialized instance
+        app = await AIAssistantApp.create()
         await app.start_services()
 
         # Keep the application running
@@ -145,10 +154,12 @@ async def main():
 
     except KeyboardInterrupt:
         print("\nShutting down...")
-        app.stop_services()
+        if app:
+            app.stop_services()
     except Exception as e:
         logging.error(f"Application error: {e}")
-        app.stop_services()
+        if app:
+            app.stop_services()
         sys.exit(1)
 
 if __name__ == "__main__":
