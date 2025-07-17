@@ -4,9 +4,9 @@ import asyncio
 import tempfile
 import shutil
 from pathlib import Path
-from unittest.mock import Mock, AsyncMock
+from unittest.mock import Mock
 import yaml
-from datetime import datetime, timedelta
+from datetime import datetime
 
 # Add src to path
 import sys
@@ -123,14 +123,56 @@ def mock_db_manager():
     db_manager.log_query.return_value = None
     return db_manager
 
-# @pytest.fixture
-# def mock_vector_store():
-#     """Mock vector store manager"""
-#     vector_store = Mock(spec=VectorStoreManager)
-#     vector_store.add_documents.return_value = ['doc1', 'doc2']
-#     vector_store.add_texts.return_value = ['text1', 'text2']
-#     vector_store.similarity_search.return_value = []
-#     return vector_store
+@pytest.fixture
+def temp_vector_store(temp_dir):
+    """Create a temporary vector store for testing"""
+    from unittest.mock import Mock, patch
+
+    # Create a temporary vector store directory
+    vector_store_dir = Path(temp_dir) / "test_vector_store"
+    vector_store_dir.mkdir(exist_ok=True)
+
+    # Mock the OpenAI embeddings to avoid API calls
+    with patch('data.vector_store.OpenAIEmbeddings') as mock_embeddings_class, \
+         patch('data.vector_store.chromadb.PersistentClient') as mock_client_class, \
+         patch('data.vector_store.Chroma') as mock_chroma_class:
+
+        # Setup mock embeddings
+        mock_embeddings = Mock()
+        mock_embeddings.embed_query.return_value = [0.1, 0.2, 0.3, 0.4, 0.5]
+        mock_embeddings_class.return_value = mock_embeddings
+
+        # Setup mock client
+        mock_client = Mock()
+        mock_collection = Mock()
+        mock_collection.count.return_value = 0
+        mock_collection.peek.return_value = {'metadatas': []}
+        mock_client.get_collection.return_value = mock_collection
+        mock_client_class.return_value = mock_client
+
+        # Setup mock vectorstore
+        mock_vectorstore = Mock()
+        mock_vectorstore.add_documents.return_value = ['doc1', 'doc2']
+        mock_vectorstore.add_texts.return_value = ['text1', 'text2']
+        mock_vectorstore.similarity_search.return_value = []
+        mock_vectorstore.similarity_search_with_score.return_value = []
+        mock_vectorstore.delete.return_value = True
+        mock_vectorstore.as_retriever.return_value = Mock()
+        mock_chroma_class.return_value = mock_vectorstore
+
+        # Create the VectorStoreManager instance
+        vector_store = VectorStoreManager(
+            persist_directory=str(vector_store_dir),
+            collection_name="test_collection",
+            openai_api_key="test-key"
+        )
+
+        # Override the mocked components
+        vector_store.client = mock_client
+        vector_store.vectorstore = mock_vectorstore
+        vector_store.embeddings = mock_embeddings
+
+        yield vector_store
 
 # @pytest.fixture
 # def sample_html_content():

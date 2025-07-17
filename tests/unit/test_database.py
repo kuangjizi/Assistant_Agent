@@ -75,7 +75,7 @@ class TestDatabaseManager:
         """Test getting content since a date"""
 
         since_date = datetime.now() - timedelta(days=1)
-        content = mock_db_manager.get_content_since(since_date)
+        content = mock_db_manager.get_content_since(since_date, topic_filter='test')
 
         assert len(content) == 1
         assert content[0]['title'] == 'Test Article'

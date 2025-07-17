@@ -13,7 +13,7 @@ import feedparser
 from readability import Document as ReadabilityDocument
 
 class WebScraper:
-    def __init__(self, config: dict = None):
+    def __init__(self, config: dict):
         """
         Initialize web scraper with configuration
 

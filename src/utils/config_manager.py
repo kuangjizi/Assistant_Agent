@@ -124,6 +124,7 @@ class ConfigManager:
         """
         required_settings = [
             'openai.api_key',
+            'google.api_key',
             'database.url',
             'email.username',
             'email.password'
@@ -152,8 +153,12 @@ class ConfigManager:
         return self.get('database.url')
 
     @property
-    def openai_api_key(self) -> str:
-        return self.get('openai.api_key')
+    def openai_model_config(self) -> Dict[str, Any]:
+        return self.get_section('openai')
+
+    @property
+    def google_model_config(self) -> Dict[str, Any]:
+        return self.get_section('google')
 
     @property
     def email_config(self) -> Dict[str, Any]:

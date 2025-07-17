@@ -2,6 +2,7 @@
 import asyncio
 import time
 import statistics
+import random
 from concurrent.futures import ThreadPoolExecutor
 
 class PerformanceTester:

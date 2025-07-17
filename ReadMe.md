@@ -52,58 +52,53 @@ Easy integration with Python backend
 
 
 ### Project Structure
-Assistant_Agent/
-├── src/
-│   ├── agents/
-│   │   ├── __init__.py
-│   │   ├── content_retriever.py
-│   │   ├── query_engine.py
-│   │   └── summarizer.py
-│   ├── data/
-│   │   ├── __init__.py
-│   │   ├── database.py
-│   │   ├── vector_store.py
-│   │   └── models.py
-│   ├── services/
-│   │   ├── __init__.py
-│   │   ├── email_service.py
-│   │   ├── scheduler.py
-│   │   └── web_scraper.py
-│   ├── utils/
-│   │   ├── __init__.py
-│   │   ├── config_manager.py
-│   │   └── logging.py
-│   └── main.py
-├── web/
-│   ├── streamlit_app.py
-│   └── components/
-├── config/
-│   ├── config.yaml
-│   └── requirements.txt
-├── tests/
-└── docker-compose.yml
-
-
-tests/
-├── __init__.py
-├── conftest.py                    # Pytest configuration and fixtures
-├── unit/
-│   ├── __init__.py
-│   ├── test_config_manager.py
-│   ├── test_database.py
-│   ├── test_vector_store.py
-│   ├── test_content_retriever.py
-│   ├── test_query_engine.py
-│   ├── test_summarizer.py
-│   ├── test_web_scraper.py
-│   ├── test_email_service.py
-│   └── test_scheduler.py
-├── integration/
-│   ├── __init__.py
-│   ├── test_end_to_end.py
-│   └── test_workflow.py
-├── fixtures/
-│   ├── sample_html.html
-│   ├── sample_rss.xml
-│   └── test_data.json
-└── requirements.txt
+```
+└── 📁Assistant_Agent
+    └── 📁config
+        ├── config.yaml
+        ├── requirements.txt
+    └── 📁evaluation
+        ├── __init__.py
+        ├── content_metrics.py
+        ├── evaluation_runner.py
+        ├── performance_testing.py
+        ├── query_metrics.py
+        ├── system_health.py
+    └── 📁src
+        └── 📁agents
+            ├── __init__.py
+            ├── content_retriever.py
+            ├── query_engine.py
+            ├── summarizer.py
+        └── 📁data
+            ├── __init__.py
+            ├── database.py
+            ├── vector_store.py
+        └── 📁services
+            ├── __init__.py
+            ├── email_service.py
+            ├── scheduler.py
+            ├── web_scraper.py
+        └── 📁utils
+            ├── __init__.py
+            ├── config_manager.py
+            ├── logging_config.py
+        ├── __init__.py
+        ├── main.py
+    └── 📁tests
+        └── 📁unit
+            ├── __init__.py
+            ├── test_config_manager.py
+            ├── test_database.py
+        ├── __init__.py
+        ├── conftest.py
+    └── 📁web
+        ├── __init__.py
+        ├── streamlit_app.py
+    ├── __init__.py
+    ├── .env
+    ├── .gitignore
+    ├── docker-compose.yml
+    ├── init.sql
+    └── ReadMe.md
+```

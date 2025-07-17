@@ -21,7 +21,7 @@ from services.email_service import EmailService
 class AIAssistantApp:
     def __init__(self):
         self.config = get_config(config_path="config/config.yaml")
-        setup_logging(self.config.system.get('log_level', 'INFO'))
+        setup_logging(self.config.get('system.log_level'))
         self.logger = logging.getLogger(__name__)
 
         # Initialize components
@@ -39,18 +39,18 @@ class AIAssistantApp:
             self.logger.info("Initializing AI Assistant Application...")
 
             # Database
-            self.db_manager = DatabaseManager(self.config.database['url'])
+            self.db_manager = DatabaseManager(self.config.database_url)
             self.logger.info("Database manager initialized")
 
             # Vector Store
             self.vector_store = VectorStoreManager(
-                persist_directory=self.config.vector_store['path'],
-                collection_name=self.config.vector_store['collection_name']
+                persist_directory=self.config.vector_store_config['path'],
+                collection_name=self.config.vector_store_config['collection_name']
             )
             self.logger.info("Vector store initialized")
 
             # Email Service
-            self.email_service = EmailService(self.config)
+            self.email_service = EmailService(self.config.email_config)
             self.logger.info("Email service initialized")
 
             # Content Retriever
@@ -64,14 +64,14 @@ class AIAssistantApp:
             # Query Engine
             self.query_engine = QueryEngine(
                 vector_store=self.vector_store,
-                llm_model=self.config.query_engine['llm_model']
+                model_config=self.config.google_model_config
             )
             self.logger.info("Query engine initialized")
 
             # Summarizer
             self.summarizer = Summarizer(
                 db_manager=self.db_manager,
-                llm=self.config.query_engine['llm_model']
+                model_config=self.config.google_model_config
             )
             self.logger.info("Summarizer initialized")
 

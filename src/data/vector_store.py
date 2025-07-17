@@ -2,7 +2,7 @@
 import chromadb
 from chromadb.config import Settings
 from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.schema import Document
 import logging
@@ -13,14 +13,14 @@ import uuid
 class VectorStoreManager:
     def __init__(self, persist_directory: str = "./data/vector_store",
                  collection_name: str = "ai_assistant_docs",
-                 openai_api_key: str = None):
+                 google_api_key: str = ''):
         """
         Initialize Vector Store Manager with ChromaDB
 
         Args:
             persist_directory: Directory to persist the vector database
             collection_name: Name of the collection to use
-            openai_api_key: OpenAI API key for embeddings
+            google_api_key: Google API key for embeddings
         """
         self.persist_directory = persist_directory
         self.collection_name = collection_name
@@ -30,9 +30,7 @@ class VectorStoreManager:
         os.makedirs(persist_directory, exist_ok=True)
 
         # Initialize embeddings
-        self.embeddings = OpenAIEmbeddings(
-            openai_api_key=openai_api_key or os.getenv("OPENAI_API_KEY")
-        )
+        self.embeddings = GoogleGenerativeAIEmbeddings(model='models/embedding-001')
 
         # Initialize text splitter
         self.text_splitter = RecursiveCharacterTextSplitter(
@@ -105,7 +103,7 @@ class VectorStoreManager:
             self.logger.error(f"Error adding documents to vector store: {e}")
             return []
 
-    def add_texts(self, texts: List[str], metadatas: List[Dict] = None) -> List[str]:
+    def add_texts(self, texts: List[str], metadatas: Optional[List[Dict]] = None) -> List[str]:
         """
         Add texts directly to the vector store
 
@@ -138,7 +136,7 @@ class VectorStoreManager:
             return []
 
     def similarity_search(self, query: str, k: int = 5,
-                         filter_dict: Dict = None) -> List[Document]:
+                         filter_dict: Optional[Dict] = None) -> List[Document]:
         """
         Perform similarity search
 
@@ -240,8 +238,8 @@ class VectorStoreManager:
             self.logger.error(f"Error deleting documents by metadata: {e}")
             return False
 
-    def update_document(self, doc_id: str, content: str = None,
-                       metadata: Dict = None) -> bool:
+    def update_document(self, doc_id: str, content: Optional[str] = None,
+                       metadata: Optional[Dict] = None) -> bool:
         """
         Update a document's content or metadata
 

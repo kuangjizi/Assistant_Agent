@@ -1,22 +1,29 @@
 # Database Configuration
 database:
-  url: "postgresql://ai_user:ai_password@localhost:5432/ai_assistant"
+  url: ${DATABASE_URL}
   pool_size: 10
   max_overflow: 20
 
 # OpenAI Configuration
 openai:
-  api_key: "your-openai-api-key-here"
+  api_key: ${OPENAI_API_KEY}
   model: "gpt-3.5-turbo"
   temperature: 0.2
   max_tokens: 2000
+
+# Gemini Configuration
+google:
+  api_key: ${GOOGLE_API_KEY}
+  model: "gemini-2.0-flash"
+  temperature: 0
+  max_tokens: 200000
 
 # Email Configuration
 email:
   smtp_server: "smtp.gmail.com"
   smtp_port: 587
-  username: "kuangjizi@gmail.com"
-  password: "xhnx hbmd dgja hwkd"
+  username: ${EMAIL_USERNAME}
+  password: ${EMAIL_PASSWORD}
   recipients:
     - "kuangjizi1234@gmail.com"
     - "kingansen@gmail.com"
@@ -35,7 +42,7 @@ scraping:
 
 # Scheduler Configuration
 scheduler:
-  timezone: "UTC"
+  timezone: "PST"
   daily_summary_time: "08:00"
   content_update_interval: 24  # hours
 

@@ -4,7 +4,7 @@ import aiohttp
 from bs4 import BeautifulSoup
 from langchain.document_loaders import WebBaseLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings import OpenAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from datetime import datetime, timedelta
 import logging
 
@@ -16,7 +16,7 @@ class ContentRetriever:
             chunk_size=1000,
             chunk_overlap=200
         )
-        self.embeddings = OpenAIEmbeddings()
+        self.embeddings = GoogleGenerativeAIEmbeddings(model='models/embedding-001')
 
     async def retrieve_content(self, urls: list) -> list:
         """Retrieve content from multiple URLs concurrently"""

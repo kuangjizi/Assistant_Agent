@@ -30,4 +30,4 @@ def setup_logging(log_level: str = "INFO"):
     # Set specific loggers
     logging.getLogger("httpx").setLevel(logging.WARNING)
     logging.getLogger("chromadb").setLevel(logging.WARNING)
-    logging.getLogger("openai").setLevel(logging.WARNING)
+    logging.getLogger("google").setLevel(logging.WARNING)

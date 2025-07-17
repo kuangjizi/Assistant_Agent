@@ -1,16 +1,20 @@
 # src/agents/query_engine.py
 from langchain.chains import RetrievalQAWithSourcesChain
-from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
 from langchain.tools import DuckDuckGoSearchRun
+from langchain_core.documents import Document
+from langgraph.checkpoint.memory import MemorySaver
+from langchain_community.vectorstores import FAISS
+from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 import logging
 import datetime
 import re
 
 class QueryEngine:
-    def __init__(self, vector_store, llm_model="gpt-3.5-turbo"):
+    def __init__(self, vector_store, model_config):
         self.vector_store = vector_store
-        self.llm = OpenAI(model_name=llm_model, temperature=0.2)
+        self.llm = ChatGoogleGenerativeAI(**model_config)
+        self.embeddings = GoogleGenerativeAIEmbeddings(model='models/embedding-001')
         self.web_search = DuckDuckGoSearchRun()
 
         # Custom prompt template
@@ -45,29 +49,34 @@ class QueryEngine:
         retriever = self.vector_store.as_retriever(search_kwargs={"k": 5})
         relevant_docs = retriever.get_relevant_documents(question)
 
-        # 2. Prepare context from retrieved documents
-        context = "\n\n".join([
-            f"Source: {doc.metadata.get('url', 'Unknown')}\n{doc.page_content}"
-            for doc in relevant_docs
-        ])
-
-        # 3. Perform web search if enabled
+        # 2. Perform web search if enabled
         web_results = ""
         if use_web_search:
             try:
-                search_results = self.web_search.run(question)
-                web_results = f"Recent web search results:\n{search_results}"
+                search_results_text = await self.web_search.arun(question) # Use async version
+                # Create a Document object for the web results
+                web_doc = Document(
+                    page_content=search_results_text,
+                    metadata={"source": "Web Search"}
+                )
+                # Add the web search result to your list of documents
+                relevant_docs.append(web_doc)
             except Exception as e:
                 logging.warning(f"Web search failed: {e}")
+
+        # 3. Create a combined, in-memoery retriever from all documents
+        combined_vector_store = FAISS.from_documents(relevant_docs, self.embeddings)
+        combined_retriever = combined_vector_store.as_retriever(search_kwargs={"k": 10})
 
         # 4. Generate answer using LLM
         qa_chain = RetrievalQAWithSourcesChain.from_chain_type(
             llm=self.llm,
-            retriever=retriever,
+            retriever=combined_retriever,
+            memory=MemorySaver(),
             return_source_documents=True
         )
 
-        result = qa_chain({"question": question})
+        result = await qa_chain({"question": question})
 
         # 5. Extract and format sources
         sources = self._extract_sources(relevant_docs)
@@ -99,9 +108,9 @@ class QueryEngine:
 
     def _assess_confidence(self, documents, answer) -> str:
         """Assess confidence level based on source quality and answer completeness"""
-        if len(documents) >= 3 and len(answer) > 100:
+        if len(documents) >= 7 and len(answer) > 100:
             return "High"
-        elif len(documents) >= 1 and len(answer) > 50:
+        elif len(documents) >= 3 and len(answer) > 50:
             return "Medium"
         else:
             return "Low"

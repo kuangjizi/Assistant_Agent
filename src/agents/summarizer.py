@@ -1,12 +1,13 @@
 # src/agents/summarizer.py
 from langchain.chains.summarize import load_summarize_chain
 from langchain.prompts import PromptTemplate
+from langchain_google_genai import GoogleGenerativeAI
 from datetime import datetime, timedelta
 
 class Summarizer:
-    def __init__(self, llm, db_manager):
-        self.llm = llm
+    def __init__(self, db_manager, model_config):
         self.db_manager = db_manager
+        self.llm = GoogleGenerativeAI(**model_config)
 
         # Custom summarization prompt
         self.summary_prompt = PromptTemplate(
