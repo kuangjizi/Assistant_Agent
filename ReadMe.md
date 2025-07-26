@@ -1,3 +1,34 @@
+## AI Assistant Agent
+
+This project create an AI Assistant that uses Retrieval-Augmented Generation (RAG) to provide intelligent responses based on content it continuously monitors and retrieves from the specified websites. It's designed as a knowledge management and question-answering system with automated content retrieval, summarization, and email notifications.
+
+### Key Features
+------------
+
+1.  **Blog-Aware Content Retrieval**: Specialized handling for blog sites, detecting index pages and extracting individual posts.
+
+2. **Automated Summaries**: Generates daily and topic-specific summaries without user intervention.
+
+3.  **Multi-Source Answers**: Combines information from the vector database with web search results.
+
+4.  **Conversational Memory**: Maintains context across chat interactions within a session.
+
+5.  **Admin Dashboard**: Provides system statistics and maintenance functions.
+
+
+###  Core Functionality
+------------------
+
+1.  **Web Content Monitoring**: Automatically retrieves content from configured URLs, processes it, and stores it for later retrieval.
+
+2.  **Intelligent Question Answering**: Uses RAG (Retrieval-Augmented Generation) to answer questions based on retrieved content, combining knowledge from its vector database with web search results.
+
+3.  **Content Summarization**: Generates daily summaries and topic-specific summaries of newly retrieved content.
+
+4.  **Email Notifications**: Sends automated email alerts, daily summaries, and topic summaries.
+
+5.  **Chat Interface**: Provides a conversational interface with memory capabilities to maintain context across interactions.
+
 ### Overall Architecture
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Web Interface │    │   Scheduler     │    │   Data Storage  │
@@ -16,43 +47,38 @@
 │   (OpenAI/Local)│    │   (SMTP)        │    │   (YAML/JSON)   │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 
-### Components
-Core Framework: LangChain
+### Frontend
 
-Excellent RAG (Retrieval-Augmented Generation) capabilities
-Built-in document processing and vector store integration
-Extensible agent framework
-Strong community support
+*   **Web Interface (Streamlit)**: Provides a user-friendly interface for interacting with the system, including chat, summaries, and admin functions.
 
-Web Scraping: Scrapy + BeautifulSoup
+### Backend
 
-Scrapy: Robust, scalable web crawling framework
-BeautifulSoup: Flexible HTML parsing for diverse content types
-Better than Selenium for performance, more reliable than simple requests
+*   **Query Engine**: Processes user questions using RAG techniques to provide accurate answers with source citations.
+*   **Content Retriever**: Fetches and processes content from monitored URLs, including specialized handling for blog sites.
+*   **Summarizer**: Creates daily and topic-based summaries of retrieved content.
+*   **Scheduler**: Manages periodic tasks like content retrieval and summary generation.
 
-Vector Database: ChromaDB
+### Data Storage
 
-Lightweight, embeddable vector database
-Easy integration with LangChain
-Good performance for moderate scale
-Alternative: Weaviate for larger scale
+*   **PostgreSQL Database**: Stores URL configurations, content records, and query logs.
+*   **Vector Store (ChromaDB)**: Stores vector embeddings of content for semantic search.
 
-Scheduler: APScheduler
+### Services
 
-Python-native scheduling with cron-like capabilities
-Persistent job storage
-Better than celery for simpler use cases
+*   **Email Service**: Handles email notifications and summaries.
+*   **Web Scraper**: Advanced web content extraction with specialized handling for different site types.
 
-Database: PostgreSQL
+Technical Stack
+---------------
 
-Reliable ACID compliance
-JSON support for flexible schema
-Full-text search capabilities
-Web Interface: Streamlit
+*   **LangChain**: Core framework for RAG capabilities and LLM integration
+*   **ChromaDB**: Vector database for semantic search
+*   **PostgreSQL**: Relational database for structured data
+*   **Streamlit**: Web interface framework
+*   **APScheduler**: Task scheduling
+*   **BeautifulSoup & Requests**: Web content extraction
+*   **Google Generative AI**: LLM provider for text generation and embeddings
 
-Rapid prototyping and deployment
-Built-in components for chat interfaces
-Easy integration with Python backend
 
 
 ### Project Structure
@@ -106,15 +132,3 @@ Easy integration with Python backend
     ├── init.sql
     └── ReadMe.md
 ```
-Here's how the chat memory currently works:
-
-1.  **Session-Based Storage**:
-
-    *   Chat history is stored in Streamlit's `session_state` (`st.session_state.messages`)
-    *   This state persists only while the browser tab remains open
-    *   If you refresh the page or close the browser, the chat history is lost
-2.  **In-Memory Processing**:
-
-    *   For each query, we pass the current session's chat history to the query engine
-    *   The query engine uses this history to provide context-aware responses
-    *   But this memory isn't persisted anywhere permanently
