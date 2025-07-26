@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>Daily Content Summary</title>
+                <style>
+                    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                    .header { background-color: #f4f4f4; padding: 20px; text-align: center; }
+                    .content { padding: 20px; }
+                    .summary-section { margin-bottom: 30px; }
+                    .source-list { background-color: #f9f9f9; padding: 15px; border-left: 4px solid #007cba; }
+                    .source-item { margin-bottom: 10px; }
+                    .source-link { color: #007cba; text-decoration: none; }
+                    .source-link:hover { text-decoration: underline; }
+                    .stats { background-color: #e8f4f8; padding: 15px; border-radius: 5px; }
+                    .footer { background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px; color: #666; }
+                </style>
+            </head>
+            <body>
+                <div class="header">
+                    <h1>🤖 AI Assistant Daily Summary</h1>
+                    <p>{{ generated_date }}</p>
+                </div>
+
+                <div class="content">
+                    <div class="stats">
+                        <h3>📊 Summary Statistics</h3>
+                        <ul>
+                            <li><strong>New Content Items:</strong> {{ content_count }}</li>
+                            <li><strong>Sources Monitored:</strong> {{ sources|length }}</li>
+                            <li><strong>Generated At:</strong> {{ generated_at }}</li>
+                        </ul>
+                    </div>
+
+                    {% if content_count > 0 %}
+                    <div class="summary-section">
+                        <h2>📝 Content Summary</h2>
+                        <div>
+                            {{ summary|safe }}
+                        </div>
+                    </div>
+
+                    <div class="summary-section">
+                        <h2>🔗 Sources</h2>
+                        <div class="source-list">
+                            {% for source in sources %}
+                            <div class="source-item">
+                                <a href="{{ source.url }}" class="source-link" target="_blank">
+                                    {{ source.title or source.url }}
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="summary-section">
+                        <h2>ℹ️ No New Content</h2>
+                        <p>No new content was found from your monitored sources today.</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="footer">
+                    <p>This email was generated automatically by your AI Assistant Agent.</p>
+                    <p>To modify your monitored sources or email preferences, please access your dashboard.</p>
+                </div>
+            </body>
+            </html>

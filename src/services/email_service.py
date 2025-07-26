@@ -24,11 +24,11 @@ class EmailService:
         self.logger = logging.getLogger(__name__)
 
         # Email configuration
-        self.smtp_server = config.get('email', {}).get('smtp_server', 'smtp.gmail.com')
-        self.smtp_port = config.get('email', {}).get('smtp_port', 587)
-        self.username = config.get('email', {}).get('username') or os.getenv('EMAIL_USERNAME')
-        self.password = config.get('email', {}).get('password') or os.getenv('EMAIL_PASSWORD')
-        self.recipients = config.get('email', {}).get('recipients', [])
+        self.smtp_server = config.get('smtp_server', 'smtp.gmail.com')
+        self.smtp_port = config.get('smtp_port', 587)
+        self.username = config.get('username')
+        self.password = config.get('password')
+        self.recipients = config.get('recipients', [])
 
         # Validate configuration
         if not self.username or not self.password:
@@ -58,202 +58,202 @@ class EmailService:
 
         # Daily summary template
         daily_summary_template = """
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Daily Content Summary</title>
-    <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .header { background-color: #f4f4f4; padding: 20px; text-align: center; }
-        .content { padding: 20px; }
-        .summary-section { margin-bottom: 30px; }
-        .source-list { background-color: #f9f9f9; padding: 15px; border-left: 4px solid #007cba; }
-        .source-item { margin-bottom: 10px; }
-        .source-link { color: #007cba; text-decoration: none; }
-        .source-link:hover { text-decoration: underline; }
-        .stats { background-color: #e8f4f8; padding: 15px; border-radius: 5px; }
-        .footer { background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px; color: #666; }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>🤖 AI Assistant Daily Summary</h1>
-        <p>{{ generated_date }}</p>
-    </div>
-
-    <div class="content">
-        <div class="stats">
-            <h3>📊 Summary Statistics</h3>
-            <ul>
-                <li><strong>New Content Items:</strong> {{ content_count }}</li>
-                <li><strong>Sources Monitored:</strong> {{ sources|length }}</li>
-                <li><strong>Generated At:</strong> {{ generated_at }}</li>
-            </ul>
-        </div>
-
-        {% if content_count > 0 %}
-        <div class="summary-section">
-            <h2>📝 Content Summary</h2>
-            <div>
-                {{ summary|safe }}
-            </div>
-        </div>
-
-        <div class="summary-section">
-            <h2>🔗 Sources</h2>
-            <div class="source-list">
-                {% for source in sources %}
-                <div class="source-item">
-                    <a href="{{ source.url }}" class="source-link" target="_blank">
-                        {{ source.title or source.url }}
-                    </a>
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>Daily Content Summary</title>
+                <style>
+                    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                    .header { background-color: #f4f4f4; padding: 20px; text-align: center; }
+                    .content { padding: 20px; }
+                    .summary-section { margin-bottom: 30px; }
+                    .source-list { background-color: #f9f9f9; padding: 15px; border-left: 4px solid #007cba; }
+                    .source-item { margin-bottom: 10px; }
+                    .source-link { color: #007cba; text-decoration: none; }
+                    .source-link:hover { text-decoration: underline; }
+                    .stats { background-color: #e8f4f8; padding: 15px; border-radius: 5px; }
+                    .footer { background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px; color: #666; }
+                </style>
+            </head>
+            <body>
+                <div class="header">
+                    <h1>🤖 AI Assistant Daily Summary</h1>
+                    <p>{{ generated_date }}</p>
                 </div>
-                {% endfor %}
-            </div>
-        </div>
-        {% else %}
-        <div class="summary-section">
-            <h2>ℹ️ No New Content</h2>
-            <p>No new content was found from your monitored sources today.</p>
-        </div>
-        {% endif %}
-    </div>
 
-    <div class="footer">
-        <p>This email was generated automatically by your AI Assistant Agent.</p>
-        <p>To modify your monitored sources or email preferences, please access your dashboard.</p>
-    </div>
-</body>
-</html>
+                <div class="content">
+                    <div class="stats">
+                        <h3>📊 Summary Statistics</h3>
+                        <ul>
+                            <li><strong>New Content Items:</strong> {{ content_count }}</li>
+                            <li><strong>Sources Monitored:</strong> {{ sources|length }}</li>
+                            <li><strong>Generated At:</strong> {{ generated_at }}</li>
+                        </ul>
+                    </div>
+
+                    {% if content_count > 0 %}
+                    <div class="summary-section">
+                        <h2>📝 Content Summary</h2>
+                        <div>
+                            {{ summary|safe }}
+                        </div>
+                    </div>
+
+                    <div class="summary-section">
+                        <h2>🔗 Sources</h2>
+                        <div class="source-list">
+                            {% for source in sources %}
+                            <div class="source-item">
+                                <a href="{{ source.url }}" class="source-link" target="_blank">
+                                    {{ source.title or source.url }}
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="summary-section">
+                        <h2>ℹ️ No New Content</h2>
+                        <p>No new content was found from your monitored sources today.</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="footer">
+                    <p>This email was generated automatically by your AI Assistant Agent.</p>
+                    <p>To modify your monitored sources or email preferences, please access your dashboard.</p>
+                </div>
+            </body>
+            </html>
         """
 
         # Topic summary template
         topic_summary_template = """
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Topic Summary: {{ topic }}</title>
-    <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .header { background-color: #f4f4f4; padding: 20px; text-align: center; }
-        .content { padding: 20px; }
-        .topic-highlight { background-color: #007cba; color: white; padding: 10px; border-radius: 5px; display: inline-block; }
-        .summary-section { margin-bottom: 30px; }
-        .source-list { background-color: #f9f9f9; padding: 15px; border-left: 4px solid #28a745; }
-        .source-item { margin-bottom: 10px; }
-        .source-link { color: #007cba; text-decoration: none; }
-        .source-link:hover { text-decoration: underline; }
-        .stats { background-color: #e8f4f8; padding: 15px; border-radius: 5px; }
-        .footer { background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px; color: #666; }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>🎯 Topic Summary</h1>
-        <div class="topic-highlight">{{ topic }}</div>
-        <p>{{ generated_date }}</p>
-    </div>
-
-    <div class="content">
-        <div class="stats">
-            <h3>📊 Summary Statistics</h3>
-            <ul>
-                <li><strong>Topic:</strong> {{ topic }}</li>
-                <li><strong>Content Items Found:</strong> {{ content_count }}</li>
-                <li><strong>Time Period:</strong> Last {{ period_days }} days</li>
-                <li><strong>Generated At:</strong> {{ generated_at }}</li>
-            </ul>
-        </div>
-
-        {% if content_count > 0 %}
-        <div class="summary-section">
-            <h2>📝 Topic Analysis</h2>
-            <div>
-                {{ summary|safe }}
-            </div>
-        </div>
-
-        <div class="summary-section">
-            <h2>🔗 Related Sources</h2>
-            <div class="source-list">
-                {% for source in sources %}
-                <div class="source-item">
-                    <a href="{{ source.url }}" class="source-link" target="_blank">
-                        {{ source.title or source.url }}
-                    </a>
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>Topic Summary: {{ topic }}</title>
+                <style>
+                    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                    .header { background-color: #f4f4f4; padding: 20px; text-align: center; }
+                    .content { padding: 20px; }
+                    .topic-highlight { background-color: #007cba; color: white; padding: 10px; border-radius: 5px; display: inline-block; }
+                    .summary-section { margin-bottom: 30px; }
+                    .source-list { background-color: #f9f9f9; padding: 15px; border-left: 4px solid #28a745; }
+                    .source-item { margin-bottom: 10px; }
+                    .source-link { color: #007cba; text-decoration: none; }
+                    .source-link:hover { text-decoration: underline; }
+                    .stats { background-color: #e8f4f8; padding: 15px; border-radius: 5px; }
+                    .footer { background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px; color: #666; }
+                </style>
+            </head>
+            <body>
+                <div class="header">
+                    <h1>🎯 Topic Summary</h1>
+                    <div class="topic-highlight">{{ topic }}</div>
+                    <p>{{ generated_date }}</p>
                 </div>
-                {% endfor %}
-            </div>
-        </div>
-        {% else %}
-        <div class="summary-section">
-            <h2>ℹ️ No Content Found</h2>
-            <p>No content related to "{{ topic }}" was found in the specified time period.</p>
-        </div>
-        {% endif %}
-    </div>
 
-    <div class="footer">
-        <p>This topic summary was generated automatically by your AI Assistant Agent.</p>
-    </div>
-</body>
-</html>
+                <div class="content">
+                    <div class="stats">
+                        <h3>📊 Summary Statistics</h3>
+                        <ul>
+                            <li><strong>Topic:</strong> {{ topic }}</li>
+                            <li><strong>Content Items Found:</strong> {{ content_count }}</li>
+                            <li><strong>Time Period:</strong> Last {{ period_days }} days</li>
+                            <li><strong>Generated At:</strong> {{ generated_at }}</li>
+                        </ul>
+                    </div>
+
+                    {% if content_count > 0 %}
+                    <div class="summary-section">
+                        <h2>📝 Topic Analysis</h2>
+                        <div>
+                            {{ summary|safe }}
+                        </div>
+                    </div>
+
+                    <div class="summary-section">
+                        <h2>🔗 Related Sources</h2>
+                        <div class="source-list">
+                            {% for source in sources %}
+                            <div class="source-item">
+                                <a href="{{ source.url }}" class="source-link" target="_blank">
+                                    {{ source.title or source.url }}
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="summary-section">
+                        <h2>ℹ️ No Content Found</h2>
+                        <p>No content related to "{{ topic }}" was found in the specified time period.</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="footer">
+                    <p>This topic summary was generated automatically by your AI Assistant Agent.</p>
+                </div>
+            </body>
+            </html>
         """
 
         # Alert template
         alert_template = """
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>AI Assistant Alert</title>
-    <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .header { background-color: #dc3545; color: white; padding: 20px; text-align: center; }
-        .content { padding: 20px; }
-        .alert-section { background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
-        .alert-item { margin-bottom: 10px; padding: 10px; background-color: white; border-radius: 3px; }
-        .timestamp { color: #666; font-size: 12px; }
-        .footer { background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px; color: #666; }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>⚠️ AI Assistant Alert</h1>
-        <p>System Alert Notification</p>
-    </div>
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>AI Assistant Alert</title>
+                <style>
+                    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                    .header { background-color: #dc3545; color: white; padding: 20px; text-align: center; }
+                    .content { padding: 20px; }
+                    .alert-section { background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+                    .alert-item { margin-bottom: 10px; padding: 10px; background-color: white; border-radius: 3px; }
+                    .timestamp { color: #666; font-size: 12px; }
+                    .footer { background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px; color: #666; }
+                </style>
+            </head>
+            <body>
+                <div class="header">
+                    <h1>⚠️ AI Assistant Alert</h1>
+                    <p>System Alert Notification</p>
+                </div>
 
-    <div class="content">
-        <div class="alert-section">
-            <h2>🚨 Alerts</h2>
-            {% for alert in alerts %}
-            <div class="alert-item">
-                <strong>{{ alert.type or 'System Alert' }}:</strong> {{ alert.message }}
-                {% if alert.timestamp %}
-                <div class="timestamp">{{ alert.timestamp }}</div>
-                {% endif %}
-            </div>
-            {% endfor %}
-        </div>
+                <div class="content">
+                    <div class="alert-section">
+                        <h2>🚨 Alerts</h2>
+                        {% for alert in alerts %}
+                        <div class="alert-item">
+                            <strong>{{ alert.type or 'System Alert' }}:</strong> {{ alert.message }}
+                            {% if alert.timestamp %}
+                            <div class="timestamp">{{ alert.timestamp }}</div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
 
-        {% if details %}
-        <div class="summary-section">
-            <h2>📋 Additional Details</h2>
-            <div>
-                {{ details|safe }}
-            </div>
-        </div>
-        {% endif %}
-    </div>
+                    {% if details %}
+                    <div class="summary-section">
+                        <h2>📋 Additional Details</h2>
+                        <div>
+                            {{ details|safe }}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
 
-    <div class="footer">
-        <p>This alert was generated automatically by your AI Assistant Agent.</p>
-        <p>Please check your system dashboard for more information.</p>
-    </div>
-</body>
-</html>
+                <div class="footer">
+                    <p>This alert was generated automatically by your AI Assistant Agent.</p>
+                    <p>Please check your system dashboard for more information.</p>
+                </div>
+            </body>
+            </html>
         """
 
         # Write templates to files

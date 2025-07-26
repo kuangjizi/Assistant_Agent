@@ -1,7 +1,187 @@
-2025-07-17 15:34:47,268 - __main__ - INFO - Initializing AI Assistant Application...
-2025-07-17 15:34:47,272 - __main__ - ERROR - Failed to initialize application: connection to server on socket "/tmp/.s.PGSQL.5432" failed: No such file or directory
-	Is the server running locally and accepting connections on that socket?
+2025-07-17 17:00:56,264 - __main__ - INFO - Initializing AI Assistant Application...
+2025-07-17 17:00:56,279 - __main__ - ERROR - Failed to initialize application: connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  database "jkuang" does not exist
 
-2025-07-17 15:34:47,272 - root - ERROR - Application error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: No such file or directory
-	Is the server running locally and accepting connections on that socket?
+2025-07-17 17:00:56,280 - root - ERROR - Application error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  database "jkuang" does not exist
 
+2025-07-17 17:26:41,995 - __main__ - INFO - Initializing AI Assistant Application...
+2025-07-17 17:26:42,283 - __main__ - INFO - Database manager initialized
+2025-07-17 17:26:42,283 - __main__ - INFO - Starting background services...
+2025-07-17 17:26:42,283 - __main__ - ERROR - Failed to start services: 'NoneType' object has no attribute 'start'
+2025-07-17 17:26:42,283 - root - ERROR - Application error: 'NoneType' object has no attribute 'start'
+2025-07-17 17:26:42,283 - __main__ - INFO - Services stopped
+2025-07-17 17:29:53,460 - __main__ - INFO - Initializing AI Assistant Application...
+2025-07-17 17:29:53,529 - __main__ - INFO - Database manager initialized
+2025-07-17 17:29:54,242 - data.vector_store - INFO - Vector store initialized at ./data/vector_store
+2025-07-17 17:29:54,242 - __main__ - INFO - Vector store initialized
+2025-07-17 17:29:54,242 - __main__ - INFO - Starting background services...
+2025-07-17 17:29:54,242 - __main__ - ERROR - Failed to start services: 'NoneType' object has no attribute 'start'
+2025-07-17 17:29:54,242 - root - ERROR - Application error: 'NoneType' object has no attribute 'start'
+2025-07-17 17:29:54,242 - __main__ - INFO - Services stopped
+2025-07-17 17:34:13,019 - __main__ - INFO - Initializing AI Assistant Application...
+2025-07-17 17:34:13,167 - __main__ - INFO - Database manager initialized
+2025-07-17 17:34:13,376 - data.vector_store - INFO - Vector store initialized at ./data/vector_store
+2025-07-17 17:34:13,376 - __main__ - INFO - Vector store initialized
+2025-07-17 17:34:13,376 - services.email_service - ERROR - Email username or password not configured
+2025-07-17 17:34:13,376 - __main__ - ERROR - Failed to initialize application: Email credentials not provided
+2025-07-17 17:34:13,376 - root - ERROR - Application error: Email credentials not provided
+2025-07-17 17:43:19,353 - __main__ - INFO - Initializing AI Assistant Application...
+2025-07-17 17:43:19,396 - __main__ - INFO - Database manager initialized
+2025-07-17 17:43:19,445 - data.vector_store - INFO - Vector store initialized at ./data/vector_store
+2025-07-17 17:43:19,445 - __main__ - INFO - Vector store initialized
+2025-07-17 17:43:19,446 - services.email_service - INFO - Created default template: daily_summary.html
+2025-07-17 17:43:19,446 - services.email_service - INFO - Created default template: topic_summary.html
+2025-07-17 17:43:19,446 - services.email_service - INFO - Created default template: alert.html
+2025-07-17 17:43:19,446 - services.email_service - INFO - Email service initialized for 2 recipients
+2025-07-17 17:43:19,446 - __main__ - INFO - Email service initialized
+2025-07-17 17:43:19,446 - __main__ - INFO - Starting background services...
+2025-07-17 17:43:19,446 - __main__ - ERROR - Failed to start services: 'NoneType' object has no attribute 'start'
+2025-07-17 17:43:19,446 - root - ERROR - Application error: 'NoneType' object has no attribute 'start'
+2025-07-17 17:43:19,446 - __main__ - INFO - Services stopped
+2025-07-17 17:43:40,267 - __main__ - INFO - Initializing AI Assistant Application...
+2025-07-17 17:43:40,316 - __main__ - INFO - Database manager initialized
+2025-07-17 17:43:40,376 - data.vector_store - INFO - Vector store initialized at ./data/vector_store
+2025-07-17 17:43:40,376 - __main__ - INFO - Vector store initialized
+2025-07-17 17:43:40,376 - services.email_service - INFO - Email service initialized for 2 recipients
+2025-07-17 17:43:40,376 - __main__ - INFO - Email service initialized
+2025-07-17 17:43:40,377 - __main__ - INFO - Content retriever initialized
+2025-07-17 17:43:40,382 - __main__ - ERROR - Failed to initialize application: Could not import duckduckgo-search python package. Please install it with `pip install -U duckduckgo-search`.
+2025-07-17 17:43:40,382 - root - ERROR - Application error: Could not import duckduckgo-search python package. Please install it with `pip install -U duckduckgo-search`.
+2025-07-17 17:58:12,514 - __main__ - INFO - Initializing AI Assistant Application...
+2025-07-17 17:58:12,575 - __main__ - INFO - Database manager initialized
+2025-07-17 17:58:12,642 - data.vector_store - INFO - Vector store initialized at ./data/vector_store
+2025-07-17 17:58:12,642 - __main__ - INFO - Vector store initialized
+2025-07-17 17:58:12,642 - services.email_service - INFO - Email service initialized for 2 recipients
+2025-07-17 17:58:12,642 - __main__ - INFO - Email service initialized
+2025-07-17 17:58:12,643 - __main__ - INFO - Content retriever initialized
+2025-07-17 17:58:12,645 - __main__ - ERROR - Failed to initialize application: Could not import duckduckgo-search python package. Please install it with `pip install -U duckduckgo-search`.
+2025-07-17 17:58:12,645 - root - ERROR - Application error: Could not import duckduckgo-search python package. Please install it with `pip install -U duckduckgo-search`.
+2025-07-17 17:58:52,477 - __main__ - INFO - Initializing AI Assistant Application...
+2025-07-17 17:58:52,534 - __main__ - INFO - Database manager initialized
+2025-07-17 17:58:52,596 - data.vector_store - INFO - Vector store initialized at ./data/vector_store
+2025-07-17 17:58:52,596 - __main__ - INFO - Vector store initialized
+2025-07-17 17:58:52,597 - services.email_service - INFO - Email service initialized for 2 recipients
+2025-07-17 17:58:52,597 - __main__ - INFO - Email service initialized
+2025-07-17 17:58:52,598 - __main__ - INFO - Content retriever initialized
+2025-07-17 17:58:52,805 - __main__ - INFO - Query engine initialized
+2025-07-17 17:58:52,806 - __main__ - INFO - Starting background services...
+2025-07-17 17:58:52,806 - __main__ - ERROR - Failed to start services: 'NoneType' object has no attribute 'start'
+2025-07-17 17:58:52,806 - root - ERROR - Application error: 'NoneType' object has no attribute 'start'
+2025-07-17 17:58:52,806 - __main__ - INFO - Services stopped
+2025-07-17 17:59:38,883 - __main__ - INFO - Initializing AI Assistant Application...
+2025-07-17 17:59:38,961 - __main__ - INFO - Database manager initialized
+2025-07-17 17:59:39,019 - data.vector_store - INFO - Vector store initialized at ./data/vector_store
+2025-07-17 17:59:39,019 - __main__ - INFO - Vector store initialized
+2025-07-17 17:59:39,019 - services.email_service - INFO - Email service initialized for 2 recipients
+2025-07-17 17:59:39,019 - __main__ - INFO - Email service initialized
+2025-07-17 17:59:39,020 - __main__ - INFO - Content retriever initialized
+2025-07-17 17:59:39,029 - __main__ - INFO - Query engine initialized
+2025-07-17 17:59:39,030 - __main__ - INFO - Summarizer initialized
+2025-07-17 17:59:39,093 - __main__ - INFO - Scheduler initialized
+2025-07-17 17:59:39,093 - __main__ - INFO - All components initialized successfully!
+2025-07-17 17:59:39,094 - __main__ - INFO - Starting background services...
+2025-07-17 17:59:39,104 - apscheduler.scheduler - INFO - Scheduler started
+2025-07-17 17:59:39,121 - __main__ - ERROR - Failed to start services: no default __reduce__ due to non-trivial __cinit__
+2025-07-17 17:59:39,121 - root - ERROR - Application error: no default __reduce__ due to non-trivial __cinit__
+2025-07-17 17:59:39,121 - __main__ - INFO - Services stopped
+2025-07-17 17:59:39,122 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-07-18 10:57:00,723 - __main__ - INFO - Initializing AI Assistant Application...
+2025-07-18 10:57:00,886 - __main__ - INFO - Database manager initialized
+2025-07-18 10:57:01,153 - data.vector_store - INFO - Vector store initialized at ./data/vector_store
+2025-07-18 10:57:01,153 - __main__ - INFO - Vector store initialized
+2025-07-18 10:57:01,153 - services.email_service - INFO - Email service initialized for 2 recipients
+2025-07-18 10:57:01,153 - __main__ - INFO - Email service initialized
+2025-07-18 10:57:01,155 - __main__ - INFO - Content retriever initialized
+2025-07-18 10:57:01,208 - __main__ - INFO - Query engine initialized
+2025-07-18 10:57:01,208 - __main__ - INFO - Summarizer initialized
+2025-07-18 10:57:03,197 - apscheduler.scheduler - INFO - Scheduler started
+2025-07-18 10:57:03,217 - apscheduler.scheduler - INFO - Added job "SchedulerService.daily_content_update" to job store "default"
+2025-07-18 10:57:03,218 - root - INFO - Scheduler started successfully
+2025-07-18 10:57:03,218 - __main__ - INFO - Scheduler initialized
+2025-07-18 10:57:03,218 - __main__ - INFO - All components initialized successfully!
+2025-07-18 10:57:03,218 - __main__ - INFO - Starting background services...
+2025-07-18 10:57:03,218 - __main__ - ERROR - Failed to start services: Scheduler is already running
+2025-07-18 10:57:03,218 - root - ERROR - Application error: Scheduler is already running
+2025-07-18 10:57:03,218 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-07-18 10:57:03,219 - __main__ - INFO - Services stopped
+2025-07-18 15:40:10,190 - __main__ - INFO - Initializing AI Assistant Application...
+2025-07-18 15:40:10,247 - __main__ - INFO - Database manager initialized
+2025-07-18 15:40:10,610 - data.vector_store - INFO - Vector store initialized at ./data/vector_store
+2025-07-18 15:40:10,610 - __main__ - INFO - Vector store initialized
+2025-07-18 15:40:10,611 - services.email_service - INFO - Email service initialized for 2 recipients
+2025-07-18 15:40:10,611 - __main__ - INFO - Email service initialized
+2025-07-18 15:40:10,612 - __main__ - INFO - Content retriever initialized
+2025-07-18 15:40:10,695 - __main__ - INFO - Query engine initialized
+2025-07-18 15:40:10,695 - __main__ - INFO - Summarizer initialized
+2025-07-18 15:40:12,631 - __main__ - INFO - Scheduler initialized
+2025-07-18 15:40:12,631 - __main__ - INFO - All components initialized successfully!
+2025-07-18 15:40:12,631 - __main__ - INFO - Starting background services...
+2025-07-18 15:40:12,632 - apscheduler.scheduler - INFO - Scheduler started
+2025-07-18 15:40:12,655 - apscheduler.scheduler - INFO - Added job "SchedulerService.daily_content_update" to job store "default"
+2025-07-18 15:40:12,656 - root - INFO - Scheduler started successfully
+2025-07-18 15:40:12,656 - __main__ - INFO - Scheduler started
+2025-07-18 15:40:12,656 - __main__ - INFO - Running initial content retrieval...
+2025-07-18 15:40:12,681 - __main__ - WARNING - No URLs configured for monitoring
+2025-07-18 15:40:12,681 - __main__ - INFO - All services started successfully!
+2025-07-24 12:04:05,946 - __main__ - INFO - Initializing AI Assistant Application...
+2025-07-24 12:04:06,024 - __main__ - INFO - Database manager initialized
+2025-07-24 12:04:06,475 - data.vector_store - INFO - Vector store initialized at ./data/vector_store
+2025-07-24 12:04:06,475 - __main__ - INFO - Vector store initialized
+2025-07-24 12:04:06,475 - services.email_service - INFO - Email service initialized for 2 recipients
+2025-07-24 12:04:06,475 - __main__ - INFO - Email service initialized
+2025-07-24 12:04:06,476 - __main__ - INFO - Content retriever initialized
+2025-07-24 12:04:06,565 - __main__ - INFO - Query engine initialized
+2025-07-24 12:04:06,565 - __main__ - INFO - Summarizer initialized
+2025-07-24 12:04:07,824 - __main__ - INFO - Scheduler initialized
+2025-07-24 12:04:07,825 - __main__ - INFO - All components initialized successfully!
+2025-07-24 12:04:07,825 - __main__ - INFO - Starting background services...
+2025-07-24 12:04:07,825 - apscheduler.scheduler - INFO - Scheduler started
+2025-07-24 12:04:07,833 - apscheduler.scheduler - INFO - Added job "SchedulerService.daily_content_update" to job store "default"
+2025-07-24 12:04:07,833 - root - INFO - Scheduler started successfully
+2025-07-24 12:04:07,833 - __main__ - INFO - Scheduler started
+2025-07-24 12:04:07,834 - __main__ - INFO - Running initial content retrieval...
+2025-07-24 12:04:07,846 - root - ERROR - Error fetching www.example.com: www.example.com
+2025-07-24 12:04:09,678 - data.vector_store - INFO - Added 21 texts to vector store
+2025-07-24 12:04:09,721 - root - ERROR - Failed to fetch www.example.com: www.example.com
+2025-07-24 12:04:09,721 - __main__ - INFO - Initial content retrieval completed for 2 URLs
+2025-07-24 12:04:09,721 - __main__ - INFO - All services started successfully!
+2025-07-24 16:40:50,606 - __main__ - INFO - Initializing AI Assistant Application...
+2025-07-24 16:40:50,645 - __main__ - INFO - Database manager initialized
+2025-07-24 16:40:50,753 - data.vector_store - INFO - Vector store initialized at ./data/vector_store
+2025-07-24 16:40:50,754 - __main__ - INFO - Vector store initialized
+2025-07-24 16:40:50,754 - services.email_service - INFO - Email service initialized for 2 recipients
+2025-07-24 16:40:50,754 - __main__ - INFO - Email service initialized
+2025-07-24 16:40:50,755 - __main__ - INFO - Content retriever initialized
+2025-07-24 16:40:50,782 - __main__ - INFO - Query engine initialized
+2025-07-24 16:40:50,782 - __main__ - INFO - Summarizer initialized
+2025-07-24 16:40:51,442 - __main__ - INFO - Scheduler initialized
+2025-07-24 16:40:51,442 - __main__ - INFO - All components initialized successfully!
+2025-07-24 16:40:51,442 - __main__ - INFO - Starting background services...
+2025-07-24 16:40:51,442 - apscheduler.scheduler - INFO - Scheduler started
+2025-07-24 16:40:51,449 - apscheduler.scheduler - INFO - Added job "SchedulerService.daily_content_update" to job store "default"
+2025-07-24 16:40:51,449 - root - INFO - Scheduler started successfully
+2025-07-24 16:40:51,449 - __main__ - INFO - Scheduler started
+2025-07-24 16:40:51,450 - __main__ - INFO - Running initial content retrieval...
+2025-07-24 16:40:51,462 - root - ERROR - Error fetching www.example.com: www.example.com
+2025-07-24 16:40:52,403 - data.vector_store - INFO - Added 21 texts to vector store
+2025-07-24 16:40:52,447 - root - ERROR - Failed to fetch www.example.com: www.example.com
+2025-07-24 16:40:52,447 - __main__ - INFO - Initial content retrieval completed for 2 URLs
+2025-07-24 16:40:52,447 - __main__ - INFO - All services started successfully!
+2025-07-24 17:14:48,069 - __main__ - INFO - Initializing AI Assistant Application...
+2025-07-24 17:14:48,114 - __main__ - INFO - Database manager initialized
+2025-07-24 17:14:48,411 - data.vector_store - INFO - Vector store initialized at ./data/vector_store
+2025-07-24 17:14:48,411 - __main__ - INFO - Vector store initialized
+2025-07-24 17:14:48,411 - services.email_service - INFO - Email service initialized for 2 recipients
+2025-07-24 17:14:48,411 - __main__ - INFO - Email service initialized
+2025-07-24 17:14:48,413 - __main__ - INFO - Content retriever initialized
+2025-07-24 17:14:48,465 - __main__ - INFO - Query engine initialized
+2025-07-24 17:14:48,466 - __main__ - INFO - Summarizer initialized
+2025-07-24 17:14:50,541 - __main__ - INFO - Scheduler initialized
+2025-07-24 17:14:50,541 - __main__ - INFO - All components initialized successfully!
+2025-07-24 17:14:50,542 - __main__ - INFO - Starting background services...
+2025-07-24 17:14:50,542 - apscheduler.scheduler - INFO - Scheduler started
+2025-07-24 17:14:50,562 - apscheduler.scheduler - INFO - Added job "SchedulerService.daily_content_update" to job store "default"
+2025-07-24 17:14:50,563 - root - INFO - Scheduler started successfully
+2025-07-24 17:14:50,563 - __main__ - INFO - Scheduler started
+2025-07-24 17:14:50,563 - __main__ - INFO - Running initial content retrieval...
+2025-07-24 17:14:50,581 - __main__ - WARNING - No URLs configured for monitoring
+2025-07-24 17:14:50,582 - __main__ - INFO - All services started successfully!

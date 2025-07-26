@@ -3,9 +3,9 @@ from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.prompts import PromptTemplate
 from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_core.documents import Document
-from langgraph.checkpoint.memory import MemorySaver
 from langchain_community.vectorstores import FAISS
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
+from langchain.memory import ConversationBufferMemory
 import logging
 import datetime
 import re
@@ -17,10 +17,17 @@ class QueryEngine:
         self.embeddings = GoogleGenerativeAIEmbeddings(model='models/embedding-001')
         self.web_search = DuckDuckGoSearchRun()
 
-        # Custom prompt template
+        # Initialize conversation memory
+        self.memory = ConversationBufferMemory(
+            memory_key="chat_history",
+            return_messages=True,
+            output_key="answer"
+        )
+
+        # Custom prompt template with chat history
         self.prompt_template = PromptTemplate(
             template="""
-            You are a knowledgeable assistant. Answer the question based on the provided context and your knowledge.
+            You are a knowledgeable assistant. Answer the question based on the provided context, chat history, and your knowledge.
             Always include source references and links when available.
 
             Context from knowledge base:
@@ -28,6 +35,9 @@ class QueryEngine:
 
             Web search results (if applicable):
             {web_results}
+
+            Chat history:
+            {chat_history}
 
             Question: {question}
 
@@ -39,18 +49,17 @@ class QueryEngine:
 
             Answer:
             """,
-            input_variables=["context", "web_results", "question"]
+            input_variables=["context", "web_results", "chat_history", "question"]
         )
 
-    async def answer_query(self, question: str, use_web_search: bool = True) -> dict:
-        """Answer user query using RAG + web search"""
+    async def answer_query(self, question: str, use_web_search: bool = True, chat_history: list = []) -> dict:
+        """Answer user query using RAG + web search with conversation memory"""
 
         # 1. Retrieve relevant documents from vector store
         retriever = self.vector_store.as_retriever(search_kwargs={"k": 5})
         relevant_docs = retriever.get_relevant_documents(question)
 
         # 2. Perform web search if enabled
-        web_results = ""
         if use_web_search:
             try:
                 search_results_text = await self.web_search.arun(question) # Use async version
@@ -64,17 +73,29 @@ class QueryEngine:
             except Exception as e:
                 logging.warning(f"Web search failed: {e}")
 
-        # 3. Create a combined, in-memoery retriever from all documents
+        # 3. Create a combined, in-memory retriever from all documents
         combined_vector_store = FAISS.from_documents(relevant_docs, self.embeddings)
         combined_retriever = combined_vector_store.as_retriever(search_kwargs={"k": 10})
 
-        # 4. Generate answer using LLM
+        # 4. Generate answer using LLM with memory
         qa_chain = RetrievalQAWithSourcesChain.from_chain_type(
             llm=self.llm,
             retriever=combined_retriever,
-            memory=MemorySaver(),
+            memory=self.memory,
             return_source_documents=True
         )
+
+        # If chat history is provided from the Streamlit app, update memory
+        if chat_history:
+            # Clear existing memory to avoid duplication
+            self.memory.clear()
+
+            # Add chat history to memory
+            for message in chat_history:
+                if message["role"] == "user":
+                    self.memory.chat_memory.add_user_message(message["content"])
+                elif message["role"] == "assistant":
+                    self.memory.chat_memory.add_ai_message(message["content"])
 
         result = await qa_chain({"question": question})
 

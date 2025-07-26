@@ -4,7 +4,11 @@ import os
 import re
 from pathlib import Path
 from typing import Any, Dict
+from dotenv import load_dotenv
 import logging
+
+# This loads the variables from .env into the environment
+load_dotenv(dotenv_path=Path(__file__).parent.parent.parent / ".env")
 
 class ConfigManager:
     """Configuration manager that loads settings from YAML and environment variables"""

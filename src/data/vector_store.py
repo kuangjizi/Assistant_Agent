@@ -1,7 +1,7 @@
 # src/data/vector_store.py
 import chromadb
 from chromadb.config import Settings
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.schema import Document
@@ -87,6 +87,10 @@ class VectorStoreManager:
                         'total_chunks': len(chunks),
                         'chunk_id': f"{metadata.get('url', 'unknown')}_{i}"
                     })
+
+                    # Ensure source field exists for RetrievalQAWithSourcesChain
+                    if 'source' not in chunk_metadata:
+                        chunk_metadata['source'] = chunk_metadata.get('url', 'Knowledge Base')
 
                     doc_objects.append(Document(
                         page_content=chunk,

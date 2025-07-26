@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>AI Assistant Alert</title>
+                <style>
+                    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                    .header { background-color: #dc3545; color: white; padding: 20px; text-align: center; }
+                    .content { padding: 20px; }
+                    .alert-section { background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+                    .alert-item { margin-bottom: 10px; padding: 10px; background-color: white; border-radius: 3px; }
+                    .timestamp { color: #666; font-size: 12px; }
+                    .footer { background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px; color: #666; }
+                </style>
+            </head>
+            <body>
+                <div class="header">
+                    <h1>⚠️ AI Assistant Alert</h1>
+                    <p>System Alert Notification</p>
+                </div>
+
+                <div class="content">
+                    <div class="alert-section">
+                        <h2>🚨 Alerts</h2>
+                        {% for alert in alerts %}
+                        <div class="alert-item">
+                            <strong>{{ alert.type or 'System Alert' }}:</strong> {{ alert.message }}
+                            {% if alert.timestamp %}
+                            <div class="timestamp">{{ alert.timestamp }}</div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    {% if details %}
+                    <div class="summary-section">
+                        <h2>📋 Additional Details</h2>
+                        <div>
+                            {{ details|safe }}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="footer">
+                    <p>This alert was generated automatically by your AI Assistant Agent.</p>
+                    <p>Please check your system dashboard for more information.</p>
+                </div>
+            </body>
+            </html>

@@ -1,6 +1,8 @@
 # src/services/scheduler.py
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
+from apscheduler.executors.pool import ThreadPoolExecutor
+from apscheduler.schedulers.background import BackgroundScheduler
 import asyncio
 import logging
 
@@ -11,12 +13,19 @@ class SchedulerService:
         self.email_service = email_service
         self.db_manager = db_manager
 
-        # Configure job store
-        jobstores = {
-            'default': SQLAlchemyJobStore(url='sqlite:///jobs.sqlite')
+        # Explicitly configure the scheduler to use threads
+        executors = {
+            'default': ThreadPoolExecutor(10) # 10 threads in the pool
         }
-
-        self.scheduler = AsyncIOScheduler(jobstores=jobstores)
+        job_defaults = {
+            'coalesce': True,
+            'max_instances': 1
+        }
+        self.scheduler = BackgroundScheduler(
+            executors=executors,
+            job_defaults=job_defaults
+        )
+        self.scheduler.configure(timezone='America/Los_Angeles')
 
     def start(self):
         """Start the scheduler"""

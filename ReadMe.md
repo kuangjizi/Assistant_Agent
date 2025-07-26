@@ -106,3 +106,15 @@ Easy integration with Python backend
     ├── init.sql
     └── ReadMe.md
 ```
+Here's how the chat memory currently works:
+
+1.  **Session-Based Storage**:
+
+    *   Chat history is stored in Streamlit's `session_state` (`st.session_state.messages`)
+    *   This state persists only while the browser tab remains open
+    *   If you refresh the page or close the browser, the chat history is lost
+2.  **In-Memory Processing**:
+
+    *   For each query, we pass the current session's chat history to the query engine
+    *   The query engine uses this history to provide context-aware responses
+    *   But this memory isn't persisted anywhere permanently
