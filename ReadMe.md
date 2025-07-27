@@ -87,13 +87,6 @@ Technical Stack
     └── 📁config
         ├── config.yaml
         ├── requirements.txt
-    └── 📁evaluation
-        ├── __init__.py
-        ├── content_metrics.py
-        ├── evaluation_runner.py
-        ├── performance_testing.py
-        ├── query_metrics.py
-        ├── system_health.py
     └── 📁src
         └── 📁agents
             ├── __init__.py
