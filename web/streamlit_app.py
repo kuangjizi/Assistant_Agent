@@ -4,6 +4,7 @@ import asyncio
 from datetime import datetime, timedelta
 import sys
 import os
+import psycopg2
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from src.agents.query_engine import QueryEngine
@@ -374,9 +375,6 @@ def main():
                     st.success(f"Vector store backed up to {backup_path}")
                 else:
                     st.error("Failed to backup vector store")
-
-# Add missing import
-import psycopg2
 
 if __name__ == "__main__":
     main()

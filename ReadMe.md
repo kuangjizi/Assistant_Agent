@@ -47,28 +47,29 @@ This project create an AI Assistant that uses Retrieval-Augmented Generation (RA
 │   (OpenAI/Local)│    │   (SMTP)        │    │   (YAML/JSON)   │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 
-### Frontend
+
+#### Frontend
 
 *   **Web Interface (Streamlit)**: Provides a user-friendly interface for interacting with the system, including chat, summaries, and admin functions.
 
-### Backend
+#### Backend
 
 *   **Query Engine**: Processes user questions using RAG techniques to provide accurate answers with source citations.
 *   **Content Retriever**: Fetches and processes content from monitored URLs, including specialized handling for blog sites.
 *   **Summarizer**: Creates daily and topic-based summaries of retrieved content.
 *   **Scheduler**: Manages periodic tasks like content retrieval and summary generation.
 
-### Data Storage
+#### Data Storage
 
 *   **PostgreSQL Database**: Stores URL configurations, content records, and query logs.
 *   **Vector Store (ChromaDB)**: Stores vector embeddings of content for semantic search.
 
-### Services
+#### Services
 
 *   **Email Service**: Handles email notifications and summaries.
 *   **Web Scraper**: Advanced web content extraction with specialized handling for different site types.
 
-Technical Stack
+#### Technical Stack
 ---------------
 
 *   **LangChain**: Core framework for RAG capabilities and LLM integration
@@ -78,6 +79,36 @@ Technical Stack
 *   **APScheduler**: Task scheduling
 *   **BeautifulSoup & Requests**: Web content extraction
 *   **Google Generative AI**: LLM provider for text generation and embeddings
+
+### Deployment
+-------------
+This application can be deployed using:
+
+`docker-compose up -d`
+
+The application will now:
+
+1.  Start PostgreSQL and Redis with health checks
+2.  Initialize the database schema using init.sql
+3.  Start the AI Assistant and Scheduler services only when dependencies are healthy
+4.  Automatically restart services if they crash
+5.  Properly handle environment variables from your .env file
+
+In addition, the application can be rebuilt using:
+
+1.  Stop the current containers:
+
+    `docker-compose down`
+
+2.  Rebuild and start the containers:
+
+    `docker-compose up -d --build`
+
+3.  Wait a few moments for all services to start up
+
+4.  Access the web application at:
+
+    `http://localhost:8501`
 
 
 

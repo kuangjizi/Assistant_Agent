@@ -5,22 +5,26 @@ streamlit
 psycopg2-binary
 sqlalchemy
 
+# Vector stores and embeddings
+chromadb
+langchain-chroma
+faiss-cpu
+
 # Web scraping
-scrapy
 beautifulsoup4
 aiohttp
 requests
-readability
 readability-lxml
 feedparser
 urllib3
 lxml
 html5lib
+duckduckgo-search
 
 # Scheduling and async
 apscheduler
 aiomqtt
-
+redis
 
 # Data processing
 pandas
@@ -43,3 +47,6 @@ pytest-asyncio
 langchain-community
 langchain-openai
 langchain_google_genai
+
+# Streamlit components
+streamlit-chat

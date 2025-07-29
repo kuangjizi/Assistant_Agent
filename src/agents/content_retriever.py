@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 import logging
 from urllib.parse import urljoin, urlparse
 import re
-from services.web_scraper import WebScraper
+from src.services.web_scraper import WebScraper
 
 class ContentRetriever:
     def __init__(self, vector_store, db_manager):
